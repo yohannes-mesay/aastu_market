@@ -6,36 +6,51 @@ const ServiceForm = () => {
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [images, setImages] = useState([]);
-  const { uploadService } = useProduct();
+  const [nameError, setNameError] = useState("");
+  const [descriptionError, setDescriptionError] = useState("");
   const [serviceData, setServiceData] = useState({
-    title: "",
-    description: "",
-    type: "",
+    title: "devCrew",
+    description: "devCrew delivery",
+    type: "DL",
     image: null,
   });
-  const handleChange = (e) => {
-    const { name, value, files } = e.target;
-
-    if (name === "image" && files.length > 0) {
-      setServiceData({ ...serviceData, image: files[0] });
-    } else {
-      setServiceData({ ...serviceData, [name]: value });
-    }
+  const { uploadProduct } = useProduct();
+  const handleImageUpload = (e) => {
+    const files = Array.from(e.target.files);
+    const imageUrls = files.map((file) => URL.createObjectURL(file));
+    setImages(imageUrls);
   };
-  const handleSubmit = async (e) => {
+
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    const uploaded = await uploadService(serviceData);
-    const formData = new FormData();
-    Object.entries(serviceData).forEach(([key, value]) => {
-      formData.append(key, value);
-    });
-    console.log("formdta", formData);
-    console.log("upd", uploaded);
-    // setName("");
-    // setDescription("");
-    // setCategory("");
-    // setImages([]);
+    // console.log("Form submitted:", { name, description, category, images });
+    uploadProduct(serviceData);
+    setName("");
+    setDescription("");
+    setCategory("");
+    setImages([]);
+  };
+  const handleNameChange = (e) => {
+    const inputValue = e.target.value;
+    if (!isNaN(inputValue)) {
+      setName("");
+      setNameError("Name cannot be a number");
+    } else {
+      setName(inputValue);
+      setNameError("");
+    }
+  };
+
+  const MAX_DESCRIPTION_LENGTH = 200;
+  const handleDescriptionChange = (e) => {
+    const inputValue = e.target.value;
+    if (inputValue.length <= MAX_DESCRIPTION_LENGTH) {
+      setDescription(inputValue);
+      setDescriptionError("");
+    } else {
+      setDescriptionError(`Description must be ${MAX_DESCRIPTION_LENGTH} characters or less`);
+    }
   };
 
   return (
@@ -44,19 +59,19 @@ const ServiceForm = () => {
         Post a New Service
       </h5>
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label htmlFor="title" className="block text-black">
-            Title
+      <div>
+          <label htmlFor="name" className="block text-black">
+            Name:
           </label>
           <input
             type="text"
-            id="title"
-            name="title"
-            className="border border-gray-300 rounded-md px-4 py-2 w-full focus:outline-none focus:border-gray-500  text-gray-700"
-            value={serviceData.name}
-            onChange={handleChange}
+            id="name"
+            className={`border ${nameError ? 'border-red-500' : 'border-gray-300'} rounded-md px-4 py-2 w-full focus:outline-none focus:border-gray-500  text-gray-700`}
+            value={name}
+            onChange={handleNameChange}
             required
           />
+          {nameError && <p className="text-red-500">{nameError}</p>}
         </div>
         <div>
           <label htmlFor="description" className="block text-black">
@@ -64,13 +79,13 @@ const ServiceForm = () => {
           </label>
           <textarea
             id="description"
-            className="border border-gray-300 rounded-md px-4 py-2 w-full focus:outline-none focus:border-gray-500  text-gray-700"
+            className={`border ${descriptionError ? 'border-red-500' : 'border-gray-300'} rounded-md px-4 py-2 w-full focus:outline-none focus:border-gray-500  text-gray-700`}
             rows="3"
-            name="description"
-            value={serviceData.description}
-            onChange={handleChange}
+            value={description}
+            onChange={handleDescriptionChange}
             required
           />
+          {descriptionError && <p className="text-red-500">{descriptionError}</p>}
         </div>
         <div>
           <label htmlFor="category" className="block text-black">
@@ -79,15 +94,12 @@ const ServiceForm = () => {
           <select
             id="category"
             className="border border-gray-300 rounded-md px-4 py-2 w-full focus:outline-none focus:border-gray-500  text-gray-700"
-            value={serviceData.type}
-            name="type"
-            onChange={handleChange}
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
             required
           >
             <option value="DL">Delivery</option>
-            <option value="maintenance">Maintenance</option>
-            <option value="repair">Repair</option>
-            <option value="consulting">Consulting</option>
+            <option value="repair">Repair Electronics</option>
             <option value="other">Other</option>
           </select>
         </div>
@@ -98,11 +110,11 @@ const ServiceForm = () => {
           <input
             type="file"
             id="images"
-            name="image"
             className="border border-gray-300 rounded-md px-4 py-2 w-full focus:outline-none focus:border-gray-500  text-gray-700"
             accept="image/*"
             multiple
-            onChange={handleChange}
+            onChange={handleImageUpload}
+            required
           />
           <div className="mt-2 flex space-x-4">
             {images.map((imageUrl, index) => (

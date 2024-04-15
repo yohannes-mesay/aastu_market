@@ -51,7 +51,7 @@ const SignInForm = () => {
             type="text"
             id="username"
             name="username"
-            className="mt-1 p-3 w-full border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+            className="mt-1 p-3 w-full border text-gray-600 border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
             value={formData.username}
             onChange={handleChange}
             required
@@ -68,7 +68,7 @@ const SignInForm = () => {
             type="password"
             id="password"
             name="password"
-            className="mt-1 p-3 w-full border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+            className="mt-1 p-3 w-full border text-gray-600 border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
             value={formData.password}
             onChange={handleChange}
             required
@@ -93,7 +93,7 @@ const SignInForm = () => {
       </form>
 
       {/* Create Account */}
-      <p className="mt-4 text-center text-md">
+      <p className="mt-4 text-gray-600 text-center text-md">
         Don't have an account?{" "}
         <Link
           to="/register"

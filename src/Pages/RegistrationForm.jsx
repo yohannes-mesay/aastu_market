@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext";
-import Loader from "../components/Loaders/Loader";
 
 const RegistrationForm = () => {
   const navigate = useNavigate();
@@ -14,7 +13,7 @@ const RegistrationForm = () => {
     username: "",
     password: "",
     confirmPassword: "",
-    phone: "1234567890",
+    phone: "",
     sex: "",
   });
 
@@ -27,8 +26,8 @@ const RegistrationForm = () => {
   const [passwordRestrictionError, setPasswordRestrictionError] =
     useState(false);
   const [isError, setIsError] = useState(false);
-  const { register, error, isLoading } = useAuth();
-  const [loading, setLoading] = useState(false);
+  const { register, error } = useAuth();
+
   const handleChange = (e) => {
     const { name, value, files } = e.target;
 
@@ -48,13 +47,14 @@ const RegistrationForm = () => {
       const isValidPhone = /^\d{10}$/.test(value);
       setFormErrors({
         ...formErrors,
-        phone: isValidPhone ? "" : "Please enter a valid 10-digit phone number",
+        phone: isValidPhone ? "" : "Please enter a valid 10-digit Ethiopian phone number",
       });
     }
 
     if (name === "password") {
       const isValidPassword =
-        /^(?=.*[a-z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(value);
+      /^.{8,}$/.test(value);
+
       setPasswordRestrictionError(!isValidPassword);
     }
 
@@ -65,8 +65,8 @@ const RegistrationForm = () => {
     }
   };
 
+
   const handleSubmit = async (e) => {
-    setLoading(true);
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
       setPasswordMatchError(true);
@@ -88,11 +88,18 @@ const RegistrationForm = () => {
     } catch (error) {
       console.error("Registration error:", error);
     }
-    setLoading(false);
   };
-  if (loading) {
-    return <Loader />;
-  }
+  // Function to check if there are any validation errors
+const hasErrors = () => {
+  return (
+    formErrors.email !== "" ||
+    formErrors.phone !== "" ||
+    passwordMatchError ||
+    passwordRestrictionError
+  );
+};
+
+
   return (
     <div className="bg-gray-100 text-gray-800 py-12 px-10 md:px-20">
       <div className="flex justify-center mt-5">
@@ -101,9 +108,10 @@ const RegistrationForm = () => {
             onSubmit={handleSubmit}
             className="bg-white shadow-md rounded px-6 pt-6 pb-8 mb-4"
           >
-            <h2 className="text-2xl font-bold text-left mb-4">
-              Registration Form
-            </h2>
+            <h2 className="text-2xl font-bold text-center mb-4">
+              Sign Up
+                </h2>
+
             <label
               className="block text-gray-700 text-md font-semibold mb-2"
               htmlFor="profile"
@@ -204,7 +212,7 @@ const RegistrationForm = () => {
                 placeholder="Enter your bio"
                 value={formData.bio}
                 onChange={handleChange}
-                required
+                
               />
             </div>
             <div className="mb-4">
@@ -245,8 +253,7 @@ const RegistrationForm = () => {
               />
               {passwordRestrictionError && (
                 <p className="text-red-500 text-xs italic mt-1">
-                  Password must be at least 8 characters long and contain at
-                  least one lowercase letter and one special character
+                  Password must be at least 8 characters long 
                 </p>
               )}
             </div>
@@ -270,7 +277,7 @@ const RegistrationForm = () => {
               />
               {passwordMatchError && (
                 <p className="text-red-500 text-xs italic mt-1">
-                  Passwords do not match
+                  Password must match
                 </p>
               )}
             </div>
@@ -337,16 +344,18 @@ const RegistrationForm = () => {
             <p className="text-md text-gray-600 text-center mb-6">
               Already have an account?{" "}
               <a className="text-blue-500 hover:text-blue-700" href="/signin">
-                Sign in
+                Sign In
               </a>
             </p>
 
             <button
-              type="submit"
-              className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
-            >
-              Register
-            </button>
+  type="submit"
+  className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full ${hasErrors() ? "cursor-not-allowed opacity-50" : ""}`}
+  disabled={hasErrors()}
+>
+  Sign Up
+</button>
+
           </form>
         </div>
       </div>
