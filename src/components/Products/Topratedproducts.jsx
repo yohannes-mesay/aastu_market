@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from "react";
-
-import saveIcon from "../../Assets/saveicon.png";
-import savedIcon from "../../Assets/savedicon.png";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../Context/AuthContext";
@@ -50,15 +47,6 @@ function TopRatedProducts() {
     setHoveredImage(null);
   };
 
-  const toggleSaved = (productId) => {
-    if (savedProducts.includes(productId)) {
-      setSavedProducts(savedProducts.filter((id) => id !== productId));
-    } else {
-      setSavedProducts([...savedProducts, productId]);
-    }
-  };
-
-  const isSaved = (productId) => savedProducts.includes(productId);
 
   const lineStyle = {
     width: isHovered ? "35%" : "0%",
@@ -144,15 +132,6 @@ function TopRatedProducts() {
                       alt={product.title}
                       className="w-full h-full object-cover rounded-lg"
                     />
-                    {isHovered && hoveredImage === product.id && (
-                      <img
-                        className="z-3"
-                        src={isSaved(product.id) ? savedIcon : saveIcon}
-                        alt="Save"
-                        style={saveIconStyle}
-                        onClick={() => toggleSaved(product.id)}
-                      />
-                    )}
                   </div>
                   <p
                     className="text-center mt-2 max-h-16 overflow-hidden whitespace-normal font-bold"

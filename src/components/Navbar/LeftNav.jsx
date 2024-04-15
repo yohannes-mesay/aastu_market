@@ -7,6 +7,7 @@ import "./LeftNav.css";
 import { useAuth } from "../../Context/AuthContext";
 import { dotStream } from "ldrs";
 import { FaUserCircle } from "react-icons/fa";
+import Logo from "../../Assets/logo.png"
 
 function LeftNav() {
   const [showExploreDropdown, setShowExploreDropdown] = useState(false);
@@ -86,8 +87,8 @@ function LeftNav() {
         showStudioDropdown || showExploreDropdown ? "hovered" : ""
       }`}
     >
-      <div className="nav-links">
-        <p className="logo">LOGO</p>
+       <div className="nav-links">
+        <img src={Logo} alt="Logo" style={{ width: "80px" }} />
 
         <ul className={`ul ${menuOpen ? "show" : ""}`} ref={menuRef}>
           <li className="home">

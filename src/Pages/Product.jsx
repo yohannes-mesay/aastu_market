@@ -78,7 +78,7 @@ function Product() {
 
   return (
     <div>
-      <div className="bg-[#222831] text-white py-32 px-10 relative">
+      <div className=" bg-[#272829]  text-white py-32 px-10 relative">
         <div className="max-w-6xl mx-auto text-center">
           <form onSubmit={handleSubmit}>
             <div className="flex items-center justify-center">
