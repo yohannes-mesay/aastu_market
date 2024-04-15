@@ -136,9 +136,7 @@ function Topservices() {
                   ) : (
                     <p className="text-gray-600">Rating: 0</p>
                   )}
-                  <p className="text-gray-600 text-center">
-                    Price: ${service.price}
-                  </p>
+                  
                 </div>
               </div>
             </Link>

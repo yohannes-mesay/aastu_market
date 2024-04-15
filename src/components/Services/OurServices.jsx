@@ -272,9 +272,7 @@ function OurServices() {
                 ) : (
                   <p className="text-gray-600">No rating</p>
                 )}
-                <p className="text-gray-600 text-center">
-                  Price: ${service.price}
-                </p>
+                
               </div>
             </div>
           </Link>
