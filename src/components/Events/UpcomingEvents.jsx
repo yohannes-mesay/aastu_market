@@ -3,11 +3,14 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../Context/AuthContext";
+import Cardskeleton from "../Skeleton/Cardskeleton";
+
 function UpcomingEvents() {
   const [events, setEvents] = useState([]);
   const [scrollLeft, setScrollLeft] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [hoveredImage, setHoveredImage] = useState(null);
+   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getExploreEvents = async () => {
@@ -16,6 +19,7 @@ function UpcomingEvents() {
           "https://aguero.pythonanywhere.com/event/?ordering=event_date "
         );
         setEvents(response.data);
+        setLoading(false);
       } catch (err) {
         console.error(err);
       }
@@ -92,7 +96,14 @@ function UpcomingEvents() {
           className="flex overflow-x-scroll scroll-smooth scrollbar-hide space-x-4 relative"
           style={{ scrollBehavior: "smooth", scrollLeft: scrollLeft + "px" }}
         >
-          {events.map((event) => (
+           {loading ? (
+          <>
+            <Cardskeleton />
+            <Cardskeleton />
+            <Cardskeleton />
+        </>
+        ) : (
+          events.map((event) => (
             <Link to={`/event/${event.id}`} key={event.id}>
               {console.log("event", event)}
               <div
@@ -130,7 +141,8 @@ function UpcomingEvents() {
                 </div>
               </div>
             </Link>
-          ))}
+           ))
+          )}
         </div>
         <button
           className="px-4 py-2 "

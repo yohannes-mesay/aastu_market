@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../Context/AuthContext";
+import Cardskeleton from "../Skeleton/Cardskeleton";
 
 function TopRatedProducts() {
   const [topRatedProducts, setTopRatedProducts] = useState([]);
@@ -9,7 +10,8 @@ function TopRatedProducts() {
   const [isHovered, setIsHovered] = useState(false);
   const [hoveredImage, setHoveredImage] = useState(null);
   const [savedProducts, setSavedProducts] = useState([]);
-
+  const [loading, setLoading] = useState(true);
+  
   const getTopRatedProducts = async () => {
     try {
       const response = await axios.get(
@@ -17,7 +19,7 @@ function TopRatedProducts() {
       );
       console.log(response.data); // Log the fetched data directly
       setTopRatedProducts(response.data);
-      console.log(topRatedProducts); // Log the state value in the next render cycle
+      setLoading(false); // Log the state value in the next render cycle
     } catch (err) {
       console.error(err);
     }
@@ -101,7 +103,14 @@ function TopRatedProducts() {
           className="flex overflow-x-scroll scroll-smooth scrollbar-hide space-x-6 relative"
           style={{ scrollBehavior: "smooth", scrollLeft: scrollLeft + "px" }}
         >
-          {topRatedProducts.map((product) => (
+      {loading ? (
+          <>
+            <Cardskeleton />
+            <Cardskeleton />
+            <Cardskeleton />
+        </>
+        ) : (
+          topRatedProducts.map((product) => (
             //--------------Single Product ---------------------
 
             <Link to={`/product/${product.id}`} key={product.id}>
@@ -132,6 +141,7 @@ function TopRatedProducts() {
                       alt={product.title}
                       className="w-full h-full object-cover rounded-lg"
                     />
+                    
                   </div>
                   <p
                     className="text-center mt-2 max-h-16 overflow-hidden whitespace-normal font-bold"
@@ -146,7 +156,8 @@ function TopRatedProducts() {
                 </div>
               </div>
             </Link>
-          ))}
+          ))
+          )}
 
           {/* -----------------------Single product end----------------- */}
         </div>
