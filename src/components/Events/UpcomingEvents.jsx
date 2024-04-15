@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-import saveIcon from "../../Assets/saveicon.png";
-import savedIcon from "../../Assets/savedicon.png";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../Context/AuthContext";
@@ -10,7 +8,6 @@ function UpcomingEvents() {
   const [scrollLeft, setScrollLeft] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [hoveredImage, setHoveredImage] = useState(null);
-  const [savedEvents, setSavedEvents] = useState([]);
 
   useEffect(() => {
     const getExploreEvents = async () => {
@@ -41,15 +38,8 @@ function UpcomingEvents() {
     setHoveredImage(null);
   };
 
-  const toggleSaved = (eventId) => {
-    if (savedEvents.includes(eventId)) {
-      setSavedEvents(savedEvents.filter((id) => id !== eventId));
-    } else {
-      setSavedEvents([...savedEvents, eventId]);
-    }
-  };
-
-  const isSaved = (eventId) => savedEvents.includes(eventId);
+ 
+  
 
   const lineStyle = {
     width: isHovered ? "35%" : "0%",
@@ -125,14 +115,7 @@ function UpcomingEvents() {
                       className="w-full h-full object-cover rounded-lg"
                     />
 
-                    {isHovered && hoveredImage === event.id && (
-                      <img
-                        src={isSaved(event.id) ? savedIcon : saveIcon}
-                        alt="Save"
-                        style={saveIconStyle}
-                        onClick={() => toggleSaved(event.id)}
-                      />
-                    )}
+                    
                   </div>
                   <p
                     className="text-center mt-2 max-h-16 overflow-hidden whitespace-normal font-bold"

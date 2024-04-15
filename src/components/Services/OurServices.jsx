@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { IoFilterSharp } from "react-icons/io5";
 import { FaCaretLeft, FaCaretRight } from "react-icons/fa";
-import saveIcon from "../../Assets/saveicon.png";
-import savedIcon from "../../Assets/savedicon.png";
 import cancel from "../../Assets/cancel.png";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -64,16 +62,7 @@ function OurServices() {
     setHoveredImage(null);
   };
 
-  const toggleSaved = (serviceId) => {
-    if (savedServices.includes(serviceId)) {
-      setSavedServices(savedServices.filter((id) => id !== serviceId));
-    } else {
-      setSavedServices([...savedServices, serviceId]);
-    }
-  };
-
-  const isSaved = (serviceId) => savedServices.includes(serviceId);
-
+  
   const lineStyle = {
     width: isHovered ? "35%" : "0%",
     height: "2px",
@@ -254,16 +243,7 @@ function OurServices() {
                     alt={service.title}
                     className="w-full h-full object-cover rounded-lg"
                   />
-                  {isHovered && hoveredImage == service.id ? (
-                    <img
-                      src={isSaved(service.id) ? savedIcon : saveIcon}
-                      alt="Save"
-                      style={saveIconStyle}
-                      onClick={() => toggleSaved(service.id)}
-                    />
-                  ) : (
-                    ""
-                  )}
+              
                 </div>
                 <p
                   className="text-center mt-2 max-h-16 overflow-hidden whitespace-normal font-bold"

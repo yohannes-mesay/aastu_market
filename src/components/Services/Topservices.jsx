@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from "react";
-
-import saveIcon from "../../Assets/saveicon.png";
-import savedIcon from "../../Assets/savedicon.png";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../Context/AuthContext";
@@ -43,15 +40,8 @@ function Topservices() {
     setHoveredImage(null);
   };
 
-  const toggleSaved = (serviceId) => {
-    if (savedServices.includes(serviceId)) {
-      setSavedServices(savedServices.filter((id) => id !== serviceId));
-    } else {
-      setSavedServices([...savedServices, serviceId]);
-    }
-  };
 
-  const isSaved = (serviceId) => savedServices.includes(serviceId);
+ 
 
   const lineStyle = {
     width: isHovered ? "35%" : "0%",
@@ -124,14 +114,7 @@ function Topservices() {
                       alt={service.title}
                       className="w-full h-full object-cover rounded-lg"
                     />
-                    {isHovered && hoveredImage === service.id && (
-                      <img
-                        src={isSaved(service.id) ? savedIcon : saveIcon}
-                        alt="Save"
-                        style={saveIconStyle}
-                        onClick={() => toggleSaved(service.id)}
-                      />
-                    )}
+              
                   </div>
                   <p
                     className="text-center mt-2 max-h-16 overflow-hidden whitespace-normal font-bold"

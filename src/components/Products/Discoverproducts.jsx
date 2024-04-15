@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { IoFilterSharp } from "react-icons/io5";
 import { FaCaretLeft, FaCaretRight } from "react-icons/fa";
-import saveIcon from "../../Assets/saveicon.png";
-import savedIcon from "../../Assets/savedicon.png";
 import cancel from "../../Assets/cancel.png";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -78,15 +76,6 @@ function DiscoverProducts() {
     setHoveredImage(null);
   };
 
-  const toggleSaved = (productId) => {
-    if (savedProducts.includes(productId)) {
-      setSavedProducts(savedProducts.filter((id) => id !== productId));
-    } else {
-      setSavedProducts([...savedProducts, productId]);
-    }
-  };
-
-  const isSaved = (productId) => savedProducts.includes(productId);
 
   const lineStyle = {
     width: isHovered ? "35%" : "0%",
@@ -429,14 +418,6 @@ function DiscoverProducts() {
                     alt={product.title}
                     className="w-full h-full object-cover rounded-lg"
                   />
-                  {isHovered && hoveredImage === product.id && (
-                    <img
-                      src={isSaved(product.id) ? savedIcon : saveIcon}
-                      alt="Save"
-                      style={saveIconStyle}
-                      onClick={() => toggleSaved(product.id)}
-                    />
-                  )}
                 </div>
                 <p
                   className="text-center mt-2 max-h-16 overflow-hidden whitespace-normal font-bold"
