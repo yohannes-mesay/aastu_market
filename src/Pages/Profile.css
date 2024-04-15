@@ -1,0 +1,230 @@
+@keyframes leftSlide{
+  from{
+    transform: translateX(-20%);
+    opacity: 0%;
+  }
+  to{
+    transform: translateX(0);
+    opacity: 100%;
+  }
+}
+@keyframes rightSlide{
+  from{
+    transform: translateY(20%);
+    opacity: 0%;
+  }
+  to{
+    transform: translateY(0);
+    opacity: 100%;
+  }
+}
+
+
+
+.body {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  min-height: 100vh;
+  background-color: white;
+}
+.cols_container{
+  padding-left: 7%;
+}
+.ul a {
+  text-decoration: none;
+}
+.header_wrapper header {
+  width: 100%;
+  background: url(../Assets/eventhero.jpg) no-repeat 50% 20% / cover;
+  min-height: calc(120px + 7vw);
+}
+.left_col {
+  padding: 25px 20px;
+  text-align: center;
+  max-width: 350px;
+  position: relative;
+  margin: 0 auto;
+  animation: leftSlide 1s ease-in .2s 1 normal both;
+}
+.left_col .img_container {
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  
+}
+.left_col .img_container img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+  box-shadow: 1px 3px 12px rgba(0, 0, 0, 0.18);
+
+  transition: transform .3s ease 0s;
+}
+.left_col .img_container img:hover {
+  transform: translateY(2%);
+}
+.left_col h2 {
+  margin-top: 60px;
+  font-weight: 600;
+  font-size: 24px;
+  margin-bottom: 7px;
+  color: black;
+}
+.basic_data{
+  padding-top: 10px;
+}
+.left_col p {
+  font-size: 0.9rem;
+  color: #818181;
+  margin: 0;
+  margin-top: 2px;
+}
+.left_col hr {
+  position: absolute;
+  background: #ccc;
+  height: 1px;
+  width: 100%;
+}
+.left_col .basic_data {
+  margin-bottom: 20px;
+}
+.left_col .content {
+  margin-top: 50px;
+}
+.content p {
+  font-size: 1rem;
+  color:#818181;
+  line-height: 1.8rem;
+  margin-bottom: 20px;
+}
+/* ----------Right column------------- */
+
+
+.right_col{
+  animation: rightSlide 1s ease-in .2s 1 normal both;
+}
+.right_col .nav {
+  display: flex;
+  align-items: center;
+  padding: 30px 0;
+  justify-content: space-between;
+  flex-direction: column;
+}
+.right_col .nav .ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+}
+.right_col .nav .ul li{
+  transition: transform 0.3s ease 0s;
+}
+.right_col .nav .ul li:hover{
+  cursor: pointer;
+  transform: translateY(-20%);
+}
+.right_col .nav .ul li a {
+  text-transform: uppercase;
+  color: #818181;
+}
+
+/* ------------------ Right col Scroll effect------------- */
+.right_col .photos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+  overflow: auto;
+  max-height: 600px;
+  margin-bottom: 50px;
+}
+
+.right_col .photos::-webkit-scrollbar {
+  width: 0.5em; /* Adjust the width as needed */
+}
+
+.right_col .photos::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.right_col .photos::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+.active{
+  color:rgb(9, 124, 177);
+  font-size: 18px;
+}
+
+/* ------------------------------------- */
+.residence {
+  padding-top: 20px;
+}
+
+/* ---------Responsive ------ */
+
+@media (min-width: 868px) {
+  .cols_container {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 90%;
+    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 200px;
+  }
+  .cols_container .left_col {
+    padding: 25px 0;
+  }
+  .right_col .nav .ul {
+    flex-direction: row;
+    gap: 30px;
+  }
+  .right_col .photos {
+    overflow: auto;
+    padding: 0 0 30px;
+  }
+  .right_col .nav {
+    display: flex;
+    align-items: start;
+    padding: 30px 0;
+    justify-content: space-between;
+    flex-direction: column;
+  }
+  .left_col .img_container {
+    width: 120px;
+  }
+}
+
+@media (min-width: 1017) {
+  .left_col {
+    margin: 0;
+    margin-right: auto;
+  }
+  .right_col .nav {
+    flex-direction: row;
+  }
+}
+
+@media (min-width: 1268px) {
+  .left_col .img_container img {
+    width: 180px;
+    height: 180px;
+  }
+  .left_col .img_container {
+    top: -110px;
+  }
+}
+@media (min-width: 1100px) {
+  .left_col .img_container {
+    width: 180px;
+  }
+}

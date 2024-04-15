@@ -1,0 +1,271 @@
+nav {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(51, 51, 51, .5);
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  transition: background-color 0.4s ease-in-out;
+}
+nav.scrolled {
+  background-color: white; 
+  box-shadow: 0 5px 8px rgba(0, 0, 0, 0.2);
+}
+
+.logo{
+  padding: 20px 0;
+}
+nav p {
+  color: white;
+  margin-left: 20px;
+}
+nav.scrolled p{
+  color: black;
+}
+
+.nav-links {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 2%;
+  flex-grow: 1;
+  text-align: center;
+}
+.nav-links .ul {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  flex-direction: row;
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links .ul li {
+  display: inline-block;
+  padding: 20px 55px;
+  position: relative;
+}
+.nav-links .logout{
+  display: inline-block;
+  padding: 20px 55px;
+  position: relative;
+  color: white;
+}
+
+.nav-links .ul li a {
+  color: white;
+  text-decoration: none;
+}
+
+/* ------------------------------ */
+
+@media(min-width: 700px){
+  nav.hovered {
+    background-color: white; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  nav.hovered p{
+    color: black;
+  }
+  nav.scrolled .nav-links .ul li a{
+    color: black;
+  }
+  nav.scrolled .nav-links .logout{
+    color: black;
+  }
+  nav.hovered .nav-links .ul li a{
+    color: black;
+  }
+  nav.hovered .nav-links .logout{
+    color: black;
+  }
+  nav.scrolled .nav-links .button{
+    color: black;
+  }
+  nav.hovered .nav-links .button{
+    color: black;
+    cursor: pointer;
+  }
+}
+
+/* ---------------------------------------- */
+
+
+.nav-links .ul li::after {
+  content: "";
+  width: 0%;
+  height: 2px;
+  background-color: lightblue;
+  display: block;
+  margin: auto;
+  transition: 0.5s;
+}
+.nav-links .logout::after{
+  content: "";
+  width: 0%;
+  height: 2px;
+  background-color: lightblue;
+  display: block;
+  margin: auto;
+  transition: 0.5s;
+}
+.nav-links .ul li:hover::after {
+  width: 100%;
+}
+.nav-links .logout:hover::after {
+  width: 100%;
+}
+
+.nav-links .ul ul {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: rgba(51, 51, 51, 0.5);
+  
+}
+
+.nav-links .ul ul li {
+  display: block;
+}
+.nav-links .button {
+  color: white;
+}
+
+
+/* Nav dropdown width */
+.button .dropdown{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+/* -------------- */
+nav.hovered .dropdown{
+  background-color: white;
+  box-shadow: 0 10px 8px rgba(0, 0, 0, 0.2);
+  /* color: black; */
+}
+nav.hovered .dropdown a{
+  background-color: white;
+  color: black;
+}
+
+
+
+
+
+
+
+/* ---------------------------------- */
+.saved{
+  border-radius: 15px;
+  border: 1px solid #a8a8a8;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #c7c5c5;
+}
+.saved img{
+  width: 50%;
+  height: 50%;
+  color: #a8a8a8;
+}
+.saved p{
+  font-weight: 500;
+  font-size: 18px;
+  padding-left: 0px;
+  margin-left: 0px;
+  color: #a8a8a8;
+}
+
+
+
+.close{
+  display: none;
+}
+@media (max-width: 700px) {
+  .nav-links .ul {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 200px;
+    height: 100vh;
+    z-index: 10;
+    padding-top: 13%;
+    background-color: rgba(51, 51, 51, 1);
+    box-shadow: -5px 0 5px rgba(0, 0, 0, 0.25);
+  }
+
+  .nav-links .ul li {
+    width: 100%;
+    padding-left: 22%;
+    align-items: center;
+    justify-content: center;
+    text-align: start;
+  }
+
+  .nav-links .ul li:hover {
+    background-color: aliceblue;
+    color: black;
+  }
+
+  nav.hovered .nav-links .ul li {
+    color: black;
+  }
+
+  .nav-links .logout {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    z-index: 15;
+    width: 200px;
+    padding-left: 5%;
+  }
+
+  .nav-links .logout:hover {
+    background-color: aliceblue;
+    color: black;
+  }
+
+  .nav-links .ul #button1:hover {
+    color: black;
+    cursor: pointer;
+  }
+
+  .nav-links .ul #button2:hover {
+    color: black;
+    cursor: pointer;
+  }
+  .nav-links .ul #button1:hover ~ #button2 {
+    transform: translateY(300%);
+    color: white;
+  }
+  .nav-links .ul #button2:hover ~ #button1 {
+    color: white;
+  }
+  .nav-links .ul #button2 li:hover ~ #button1 {
+    color: white;
+  }
+  .nav-links .ul .button:hover li {
+    padding-left: 30%;
+  }
+
+  .nav-links .ul .home:hover a {
+    background-color: aliceblue;
+    color: black;
+  }
+  .menu_icon .close{
+    display: block;
+    position: absolute;
+    right: 7%;
+    z-index: 15;
+    top: 30%;
+  }
+}

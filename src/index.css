@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+   --Green-text-color: #11875C;  /* For Green texts */
+   --Green-rectangle-color:#77D0B0; /* For Green rectangle backgrounds */
+   --Black-color-primary: #2E2E2D;   /* For black header texts */
+   --Black-color-secondary:#5D5C5C;  /* For black Detail texts */
+}
