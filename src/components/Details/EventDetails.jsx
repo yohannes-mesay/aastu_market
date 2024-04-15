@@ -13,6 +13,7 @@ function EventDetails() {
   const [isHovered, setIsHovered] = useState(false);
   const [hoveredImage, setHoveredImage] = useState(null);
   const [savedEvents, setSavedEvents] = useState([]);
+  const [phoneNumber, setPhoneNumber] = useState("");
    const BASE_URL = "https://aguero.pythonanywhere.com";
 
   useEffect(() => {
@@ -76,6 +77,13 @@ function EventDetails() {
     );
   }
 
+  const handleCallButtonClick = () => {
+    const generatedPhoneNumber = `+251${Math.random() < 0.5 ? "7" : "9"}${
+      Math.floor(Math.random() * (99999999 - 10000000 + 1)) + 10000000
+    }`;
+    setPhoneNumber(generatedPhoneNumber);
+  };
+
   return (
     <div>
       <div className="p-8 sm:p-8">
@@ -105,29 +113,24 @@ function EventDetails() {
             </div>
             
             <div className="flex">
-             <button onClick={() =>
-                    alert(
-                      `Phone.No: +251${Math.random() < 0.5 ? "7" : "9"}${
-                        Math.floor(Math.random() * (99999999 - 10000000 + 1)) +
-                        10000000
-                      }`
-                    )
-                  } className="bg-orange-400 hover:bg-white text-black font-bold py-4 px-10 rounded-xl mr-2 flex items-center">
+             <button
+                onClick={handleCallButtonClick}
+                className="bg-orange-400 hover:bg-white text-black font-bold py-4 px-10 rounded-xl mr-2 flex items-center"
+              >
                 <Phone size={24} />
-                <span
-                
-                >
-                  Call
-                </span>
+                <span>Call</span>
               </button>
               <button className="bg-orange-400 hover:bg-white text-black font-bold py-4 px-10 rounded-xl ml-2 flex items-center">
                 <BookmarkSimple size={24} />
                 <span className="ml-2">Save</span>
               </button>
             </div>
+            {phoneNumber && (
+                <p className="text-lg font-bold mt-2">Phone No: {phoneNumber}</p>
+              )}
           </div>
         </div>
-
+        
 
         {/* Reviews Section */}
         <div className="mt-20">
