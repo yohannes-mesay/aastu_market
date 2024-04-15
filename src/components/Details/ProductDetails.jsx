@@ -6,7 +6,7 @@ import { Phone, BookmarkSimple, BookBookmark, Star } from "phosphor-react";
 import ReviewsCard from "../Single/ReviewsCard.jsx";
 import saveIcon from "../../Assets/saveicon.png";
 import savedIcon from "../../Assets/savedicon.png";
-import StarRating from "../StarRating/StarRating.jsx";
+import StarRating from "../Rating/StarRating.jsx";
 
 import axios from "axios";
 import savedPostFetch from "../savedPost/savedPostFetch.jsx";

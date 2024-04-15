@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FaChevronRight } from "react-icons/fa6";
-import { FaChevronLeft } from "react-icons/fa";
+
 import saveIcon from "../../Assets/saveicon.png";
 import savedIcon from "../../Assets/savedicon.png";
 import { Link } from "react-router-dom";
@@ -108,9 +107,7 @@ function TopRatedProducts() {
           className="px-4 py-2 "
           onClick={() => scrollContainer(-100)}
           style={scrollButtonStyle}
-        >
-          <FaChevronLeft />
-        </button>
+        ></button>
         <div
           id="scroll-content"
           className="flex overflow-x-scroll scroll-smooth scrollbar-hide space-x-6 relative"
@@ -178,9 +175,7 @@ function TopRatedProducts() {
           className="px-4 py-2 "
           onClick={() => scrollContainer(100)}
           style={scrollButtonStyle}
-        >
-          <FaChevronRight />
-        </button>
+        ></button>
       </div>
     </div>
   );
