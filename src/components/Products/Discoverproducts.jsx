@@ -6,7 +6,7 @@ import savedIcon from "../../Assets/savedicon.png";
 import cancel from "../../Assets/cancel.png";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import {BASE_URL} from "../../Context/AuthContext";
+import { BASE_URL } from "../../Context/AuthContext";
 function DiscoverProducts() {
   const [discoverProducts, setDiscoverProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);

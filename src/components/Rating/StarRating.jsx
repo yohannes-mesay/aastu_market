@@ -11,7 +11,7 @@ const starContainerStyle = {
 
 export default function StarRating({
   maxRating = 5,
-  color = "#11875C",
+  color = "#f28424",
   size = 48,
   messages = [],
   onSetRating,
@@ -22,7 +22,7 @@ export default function StarRating({
   function handleRating(rating) {
     setRating(rating);
     onSetRating(rating);
-    console.log("rating in star",rating);
+    console.log("rating in star", rating);
   }
   const textStyle = {
     lineHeight: "1",

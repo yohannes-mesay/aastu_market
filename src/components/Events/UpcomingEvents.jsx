@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
+
 import saveIcon from "../../Assets/saveicon.png";
 import savedIcon from "../../Assets/savedicon.png";
 import { Link } from "react-router-dom";
@@ -96,9 +96,7 @@ function UpcomingEvents() {
           className="px-4 py-2 "
           onClick={() => scrollContainer(-100)}
           style={scrollButtonStyle}
-        >
-          <FaChevronLeft />
-        </button>
+        ></button>
         <div
           id="scroll-content"
           className="flex overflow-x-scroll scroll-smooth scrollbar-hide space-x-4 relative"
@@ -155,9 +153,7 @@ function UpcomingEvents() {
           className="px-4 py-2 "
           onClick={() => scrollContainer(100)}
           style={scrollButtonStyle}
-        >
-          <FaChevronRight />
-        </button>
+        ></button>
       </div>
     </div>
   );
