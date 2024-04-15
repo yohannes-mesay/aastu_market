@@ -15,6 +15,7 @@ function ServiceDetails() {
   const [isHovered, setIsHovered] = useState(false);
   const [hoveredImage, setHoveredImage] = useState(null);
   const [savedServices, setSavedServices] = useState([]);
+  const [phoneNumber, setPhoneNumber] = useState("");
 
   useEffect(() => {
     fetch(`https://aguero.pythonanywhere.com/service/${id}`)
@@ -77,6 +78,13 @@ function ServiceDetails() {
     );
   }
 
+  const handleCallButtonClick = () => {
+    const generatedPhoneNumber = `+251${Math.random() < 0.5 ? "7" : "9"}${
+      Math.floor(Math.random() * (99999999 - 10000000 + 1)) + 10000000
+    }`;
+    setPhoneNumber(generatedPhoneNumber);
+  };
+
   return (
     <div>
       <div className="p-8 sm:p-8">
@@ -107,26 +115,21 @@ function ServiceDetails() {
             </div>
             <p className="text-xl font-bold mb-14">Price: ${service.price}</p>
             <div className="flex">
-              <button onClick={() =>
-                    alert(
-                      `Phone.No: +251${Math.random() < 0.5 ? "7" : "9"}${
-                        Math.floor(Math.random() * (99999999 - 10000000 + 1)) +
-                        10000000
-                      }`
-                    )
-                  } className="bg-orange-400 hover:bg-white text-black font-bold py-4 px-10 rounded-xl mr-2 flex items-center">
+             <button
+                onClick={handleCallButtonClick}
+                className="bg-orange-400 hover:bg-white text-black font-bold py-4 px-10 rounded-xl mr-2 flex items-center"
+              >
                 <Phone size={24} />
-                <span
-                
-                >
-                  Call
-                </span>
+                <span>Call</span>
               </button>
               <button className="bg-orange-400 hover:bg-white text-black font-bold py-4 px-10 rounded-xl ml-2 flex items-center">
                 <BookmarkSimple size={24} />
                 <span className="ml-2">Save</span>
               </button>
             </div>
+            {phoneNumber && (
+                <p className="text-lg font-bold mt-2">Phone No: {phoneNumber}</p>
+              )}
           </div>
         </div>
 

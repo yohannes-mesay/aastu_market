@@ -23,6 +23,7 @@ function ProductDetails() {
   const [savedEvents, setSavedEvents] = useState([]);
   const [saveState, setSaveState] = useState(false);
   const [saveId, setSaveId] = useState(0);
+  const [phoneNumber, setPhoneNumber] = useState("");
   const BASE_URL = "https://aguero.pythonanywhere.com";
 
   const [rating, setRating] = useState(0);
@@ -44,16 +45,17 @@ function ProductDetails() {
   }
 
   const getproducts = async () => {
-    try {
-      const response = await axios.get(
-        { BASE_URL } / product / 0 / save,
-        config
-      );
-      console.log("res", response.data);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  try {
+    const response = await axios.get(
+      `${BASE_URL}/product/0/save`,
+      config
+    );
+    console.log("res", response.data);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 
   useEffect(() => {
     getproducts();
@@ -149,6 +151,13 @@ function ProductDetails() {
     console.log("review", review);
   }
 
+   const handleCallButtonClick = () => {
+    const generatedPhoneNumber = `+251${Math.random() < 0.5 ? "7" : "9"}${
+      Math.floor(Math.random() * (99999999 - 10000000 + 1)) + 10000000
+    }`;
+    setPhoneNumber(generatedPhoneNumber);
+  };
+
   return (
     <div>
       <div className="p-8">
@@ -179,22 +188,18 @@ function ProductDetails() {
             </div>
             <p className="text-xl font-bold mb-14">Price: ${product.price}</p>
             <div className="flex">
-              <button onClick={() =>
-                    alert(
-                      `Phone.No: +251${Math.random() < 0.5 ? "7" : "9"}${
-                        Math.floor(Math.random() * (99999999 - 10000000 + 1)) +
-                        10000000
-                      }`
-                    )
-                  } className="bg-orange-400 hover:bg-white text-black font-bold py-4 px-10 rounded-xl mr-2 flex items-center">
+              <button
+                onClick={handleCallButtonClick}
+                className="bg-orange-400 hover:bg-white text-black font-bold py-4 px-10 rounded-xl mr-2 flex items-center"
+              >
                 <Phone size={24} />
-                <span
-                
-                >
-                  Call
-                </span>
+                <span>Call</span>
               </button>
-
+              <button className="bg-orange-400 hover:bg-white text-black font-bold py-4 px-10 rounded-xl ml-2 flex items-center">
+                <BookmarkSimple size={24} />
+                <span className="ml-2">Save</span>
+              </button>
+      
               {/* ----------------------- Handling Save---------------------- */}
               {saveState ? (
                 <button
@@ -204,20 +209,17 @@ function ProductDetails() {
                   <BookBookmark size={24} />
                   <span className="ml-2">Saved</span>
                 </button>
-              ) : (
-                <button
-                  className="bg-orange-400  hover:bg-white text-black font-bold py-4 px-10 rounded-xl ml-2 flex items-center"
-                  onClick={handleSaveState}
-                >
-                  <BookmarkSimple size={24} />
-                  <span className="ml-2">Save</span>
-                </button>
-              )}
+              ) : null }
 
               {/* -----------------------End----------------------------- */}
             </div>
+            {phoneNumber && (
+                <p className="text-lg font-bold mt-2">Phone No: {phoneNumber}</p>
+              )}
+
           </div>
         </div>
+        
 
         <form onSubmit={handleRatingReview}>
           {/* Rating Section */}
