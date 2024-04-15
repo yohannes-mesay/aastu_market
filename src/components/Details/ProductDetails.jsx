@@ -179,9 +179,20 @@ function ProductDetails() {
             </div>
             <p className="text-xl font-bold mb-14">Price: ${product.price}</p>
             <div className="flex">
-              <button className="bg-orange-500 text-black  hover:bg-white font-bold py-4 px-10 rounded-xl mr-2 flex items-center">
+              <button onClick={() =>
+                    alert(
+                      `Phone.No: +251${Math.random() < 0.5 ? "7" : "9"}${
+                        Math.floor(Math.random() * (99999999 - 10000000 + 1)) +
+                        10000000
+                      }`
+                    )
+                  } className="bg-orange-400 hover:bg-white text-black font-bold py-4 px-10 rounded-xl mr-2 flex items-center">
                 <Phone size={24} />
-                <span className="ml-2">Call</span>
+                <span
+                
+                >
+                  Call
+                </span>
               </button>
 
               {/* ----------------------- Handling Save---------------------- */}
@@ -195,7 +206,7 @@ function ProductDetails() {
                 </button>
               ) : (
                 <button
-                  className="bg-orange-500  hover:bg-white text-black font-bold py-4 px-10 rounded-xl ml-2 flex items-center"
+                  className="bg-orange-400  hover:bg-white text-black font-bold py-4 px-10 rounded-xl ml-2 flex items-center"
                   onClick={handleSaveState}
                 >
                   <BookmarkSimple size={24} />

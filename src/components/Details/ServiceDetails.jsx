@@ -5,6 +5,7 @@ import ReviewsCard from "../Single/ReviewsCard";
 import saveIcon from "../../Assets/saveicon.png";
 import savedIcon from "../../Assets/savedicon.png";
 import StarRating from "../Rating/StarRating";
+import { BASE_URL } from "../../Context/AuthContext";
 
 function ServiceDetails() {
   const { id } = useParams();
@@ -79,13 +80,14 @@ function ServiceDetails() {
   return (
     <div>
       <div className="p-8 sm:p-8">
-        <div className="flex sm:flex-row mr-30 ml-30 mt-10 mb-10 justify-items-center">
-          <div className="w-full sm:w-auto mb-4 sm:mb-0">
+       <div className="flex mr-40 ml-40 mt-20 mb-20 justify-items-center">
+          <div className="">
             <img
-              src={service.image}
-              alt={service.title}
-              className="w-full h-auto  object-contain"
-            />
+  src={`${BASE_URL}${service.image}`} // Correct template literal usage
+  alt={service.title}
+  className="w-full h-full object-cover rounded-lg"
+/>
+
           </div>
           <div className="w-full sm:w-1/2 pl-8 ml-0 sm:ml-20">
             <h3 className="text-xl font-ubuntu mb-0">{service.title}</h3>
@@ -105,9 +107,20 @@ function ServiceDetails() {
             </div>
             <p className="text-xl font-bold mb-14">Price: ${service.price}</p>
             <div className="flex">
-              <button className="bg-orange-400 hover:bg-white text-black font-bold py-4 px-10 rounded-xl mr-2 flex items-center">
+              <button onClick={() =>
+                    alert(
+                      `Phone.No: +251${Math.random() < 0.5 ? "7" : "9"}${
+                        Math.floor(Math.random() * (99999999 - 10000000 + 1)) +
+                        10000000
+                      }`
+                    )
+                  } className="bg-orange-400 hover:bg-white text-black font-bold py-4 px-10 rounded-xl mr-2 flex items-center">
                 <Phone size={24} />
-                <span className="ml-2">Call</span>
+                <span
+                
+                >
+                  Call
+                </span>
               </button>
               <button className="bg-orange-400 hover:bg-white text-black font-bold py-4 px-10 rounded-xl ml-2 flex items-center">
                 <BookmarkSimple size={24} />
