@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FaChevronRight } from "react-icons/fa6";
-import { FaChevronLeft } from "react-icons/fa";
+
 import saveIcon from "../../Assets/saveicon.png";
 import savedIcon from "../../Assets/savedicon.png";
 import { Link } from "react-router-dom";
@@ -105,24 +104,24 @@ function ProductsSaved() {
             onClick={() => scrollContainer(-100)}
             style={scrollButtonStyle}
           >
-            <FaChevronLeft />
+            
           </button>
           <div
             id="scroll-content"
             className="flex overflow-x-scroll scroll-smooth scrollbar-hide space-x-6 relative"
             style={{ scrollBehavior: "smooth", scrollLeft: scrollLeft + "px" }}
           >
-            {products.map((product) => (
-              <Link to={`/product/${product.id}`} key={product.id}>
-                {console.log("primg", product.product.image)}
+            {products.map((each) => (
+              <Link to={`/product/${each.id}`} key={each.id}>
+                {console.log("primg", each.product.image)}
                 <div
-                  key={product.id}
+                  key={each.product.id}
                   className="w-64  rounded-xl p-2 mb-4 relative hover:scale-110 hover:opacity-90 transition duration-300 ease-in-out cursor-pointer shadow-lg"
-                  onMouseEnter={() => handleMouseEnter(product.id)}
+                  onMouseEnter={() => handleMouseEnter(each.product.id)}
                   onMouseLeave={handleMouseLeave}
                   style={{
                     backgroundColor:
-                      isHovered && hoveredImage === product.id
+                      isHovered && hoveredImage === each.product.id
                         ? "#E5E7EB"
                         : "white",
                   }}
@@ -130,8 +129,8 @@ function ProductsSaved() {
                   <div className="flex flex-col items-center relative">
                     <div className="w-64 h-64 overflow-hidden mb-2 relative rounded-lg">
                       <img
-                        src={`${BASE_URL}${product.product.image}`}
-                        alt={product.title}
+                        src={`${BASE_URL}${each.product.image}`}
+                        alt={each.title}
                         className="w-full h-full object-cover rounded-lg"
                       />
                       <div className="bg-white  rounded-full w-9 h-9 p-1 flex items-center justify-center absolute top-5 right-5 cursor-pointer	">
@@ -152,11 +151,11 @@ function ProductsSaved() {
                       </div>
                     </div>
                     <p className="text-center mt-2 max-h-16 overflow-hidden whitespace-normal font-bold">
-                      {product.title}
+                      {each.product.title}
                     </p>
-                    <p className="text-gray-600">{product.rating} stars</p>
+                    <p className="text-gray-600">{each.product.rating} stars</p>
                     <p className="text-gray-600 text-center">
-                      Price: ${product.price}
+                      Price: ${each.product.price}
                     </p>
                   </div>
                 </div>
@@ -168,7 +167,7 @@ function ProductsSaved() {
             onClick={() => scrollContainer(100)}
             style={scrollButtonStyle}
           >
-            <FaChevronRight />
+            
           </button>
         </div>
       ) : (
