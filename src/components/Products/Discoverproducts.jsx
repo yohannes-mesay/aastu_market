@@ -5,6 +5,8 @@ import cancel from "../../Assets/cancel.png";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../Context/AuthContext";
+import Cardskeleton from "../Skeleton/Cardskeleton";
+
 function DiscoverProducts() {
   const [discoverProducts, setDiscoverProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -18,6 +20,7 @@ function DiscoverProducts() {
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [isCustomPrice, setIsCustomPrice] = useState(false);
+ const [loading, setLoading] = useState(true);
 
   const getDiscoverProducts = async (category = null, priceFilter = null) => {
     try {
@@ -39,6 +42,7 @@ function DiscoverProducts() {
       console.log("API URL:", apiUrl);
       const response = await axios.get(apiUrl);
       setDiscoverProducts(response.data);
+      setLoading(false);
     } catch (err) {
       console.error("Error fetching products:", err);
     }
@@ -316,6 +320,19 @@ function DiscoverProducts() {
             </li>
             <li
               className="cursor-pointer py-1 px-2 "
+              onClick={() => handleCategoryChange("OE")}
+            >
+              <input
+                type="radio"
+                id="Other Electronics"
+                name="category"
+                checked={selectedCategory === "OE"}
+                onChange={() => handleCategoryChange("OE")}
+              />
+              <label htmlFor="Other Electronics">Other Electronics</label>
+            </li>
+            <li
+              className="cursor-pointer py-1 px-2 "
               onClick={() => handleCategoryChange("OT")}
             >
               <input
@@ -325,7 +342,7 @@ function DiscoverProducts() {
                 checked={selectedCategory === "OT"}
                 onChange={() => handleCategoryChange("OT")}
               />
-              <label htmlFor="Other Electronics">Other Electronics</label>
+              <label htmlFor="Other Electronics">Other </label>
             </li>
           </ul>
         </div>
@@ -396,8 +413,22 @@ function DiscoverProducts() {
         </div>
       </div>
 
+
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-        {currentProducts.map((product) => (
+        {loading ? (
+          // Render skeleton cards while data is loading
+          <>
+            <Cardskeleton />
+            <Cardskeleton />
+            <Cardskeleton />
+            <Cardskeleton />
+            <Cardskeleton />
+            <Cardskeleton />
+            <Cardskeleton />
+            <Cardskeleton />
+          </>
+        ) : (
+        currentProducts.map((product) => (
           <Link to={`/product/${product.id}`} key={product.id}>
             <div
               key={product.id}
@@ -432,9 +463,10 @@ function DiscoverProducts() {
               </div>
             </div>
           </Link>
-        ))}
+        ))
+        )}
         {/* Render empty placeholders if there are less than 8 products */}
-        {currentProducts.length < 8 &&
+        {!loading && currentProducts.length < 8 &&
           [...Array(8 - currentProducts.length)].map((_, index) => (
             <div key={`placeholder-${index}`} className="w-64 h-64"></div>
           ))}

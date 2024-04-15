@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../Context/AuthContext";
+import Cardskeleton from "../Skeleton/Cardskeleton";
 
 function Topservices() {
   const [featuredServices, setFeaturedServices] = useState([]);
@@ -9,13 +10,14 @@ function Topservices() {
   const [isHovered, setIsHovered] = useState(false);
   const [hoveredImage, setHoveredImage] = useState(null);
   const [savedServices, setSavedServices] = useState([]);
-
+  const [loading, setLoading] = useState(true);
   const getFeaturedServices = async () => {
     try {
       const response = await axios.get(
         "https://aguero.pythonanywhere.com/service/?ordering=-posted_time "
       );
       setFeaturedServices(response.data);
+        setLoading(false);
     } catch (err) {
       console.error(err);
     }
@@ -93,7 +95,14 @@ function Topservices() {
           className="flex overflow-x-scroll scroll-smooth scrollbar-hide space-x-4 relative"
           style={{ scrollBehavior: "smooth", scrollLeft: scrollLeft + "px" }}
         >
-          {featuredServices.map((service) => (
+          {loading ? (
+          <>
+            <Cardskeleton />
+            <Cardskeleton />
+            <Cardskeleton />
+        </>
+        ) : (
+          featuredServices.map((service) => (
             <Link to={`/service/${service.id}`} key={service.id}>
               <div
                 key={service.id}
@@ -133,7 +142,8 @@ function Topservices() {
                 </div>
               </div>
             </Link>
-          ))}
+           ))
+          )}
         </div>
         <button
           className="px-4 py-2 "

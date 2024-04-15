@@ -2,19 +2,23 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../Context/AuthContext";
+import Cardskeleton from "../Skeleton/Cardskeleton";
+
 function Latestproduct() {
   const [latestProducts, setLatestProducts] = useState([]);
   const [scrollLeft, setScrollLeft] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [hoveredImage, setHoveredImage] = useState(null);
   const [savedProducts, setSavedProducts] = useState([]);
-
+ const [loading, setLoading] = useState(true);
+ 
   const getLatestProducts = async () => {
     try {
       const response = await axios.get(
         "https://aguero.pythonanywhere.com//product/?ordering=-posted_time "
       );
       setLatestProducts(response.data);
+      setLoading(false);
     } catch (err) {
       console.error(err);
     }
@@ -92,7 +96,14 @@ function Latestproduct() {
           className="flex overflow-x-scroll scroll-smooth scrollbar-hide space-x-6 relative"
           style={{ scrollBehavior: "smooth", scrollLeft: scrollLeft + "px" }}
         >
-          {latestProducts.map((product) => (
+           {loading ? (
+          <>
+            <Cardskeleton />
+            <Cardskeleton />
+            <Cardskeleton />
+        </>
+        ) : (
+          latestProducts.map((product) => (
             <Link to={`/product/${product.id}`} key={product.id}>
               <div
                 key={product.id}
@@ -130,7 +141,9 @@ function Latestproduct() {
                 </div>
               </div>
             </Link>
-          ))}
+           ))
+          )}
+
         </div>
         <button
           className="px-4 py-2"

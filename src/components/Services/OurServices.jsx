@@ -5,6 +5,7 @@ import cancel from "../../Assets/cancel.png";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../Context/AuthContext";
+import Cardskeleton from "../Skeleton/Cardskeleton";
 
 function OurServices() {
   const [services, setServices] = useState([]);
@@ -15,7 +16,7 @@ function OurServices() {
   const [savedServices, setSavedServices] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-
+  const [loading, setLoading] = useState(true);
   const getServices = async (category = null) => {
     try {
       let apiUrl = "https://aguero.pythonanywhere.com/service/";
@@ -25,6 +26,7 @@ function OurServices() {
       console.log("API URL:", apiUrl);
       const response = await axios.get(apiUrl);
       setServices(response.data);
+       setLoading(false);
     } catch (err) {
       console.error("Error fetching products:", err);
     }
@@ -222,7 +224,20 @@ function OurServices() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-        {currentServices.map((service) => (
+        {loading ? (
+          // Render skeleton cards while data is loading
+          <>
+            <Cardskeleton />
+            <Cardskeleton />
+            <Cardskeleton />
+            <Cardskeleton />
+            <Cardskeleton />
+            <Cardskeleton />
+            <Cardskeleton />
+            <Cardskeleton />
+          </>
+        ) : (
+        currentServices.map((service) => (
           <Link to={`/service/${service.id}`} key={service.id}>
             <div
               key={service.id}
@@ -263,9 +278,10 @@ function OurServices() {
               </div>
             </div>
           </Link>
-        ))}
+        ))
+        )}
         {/* Render empty placeholders if there are less than 8 products */}
-        {currentServices.length < 8 &&
+        {!loading && currentServices.length < 8 &&
           [...Array(8 - currentServices.length)].map((_, index) => (
             <div key={`placeholder-${index}`} className="w-64 h-64"></div>
           ))}
