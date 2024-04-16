@@ -12,6 +12,7 @@ import axios from "axios";
 import savedPostFetch from "../savedPost/savedPostFetch.jsx";
 import deletePost from "../savedPost/deletePost.jsx";
 import { useProduct } from "../../Context/ProductContext.jsx";
+import { useAuth } from "../../Context/AuthContext.jsx";
 
 function ProductDetails() {
   const { id } = useParams();
@@ -31,6 +32,7 @@ function ProductDetails() {
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
   const { rater, reviewer, getReviews, getRatings } = useProduct();
+  const { user } = useAuth();
 
   const token = localStorage.getItem("token");
   let config = null;
@@ -80,7 +82,6 @@ function ProductDetails() {
       .then((data) => setReviews(data.json_array));
   }, [id]);
 
-
   useEffect(() => {
     async function fetchReviewsAndRatings() {
       const reviewsResponse = await getReviews(id);
@@ -111,7 +112,7 @@ function ProductDetails() {
   const handleMouseEnter = (eventId) => {
     setIsHovered(true);
     setHoveredImage(eventId);
-  }; 
+  };
 
   const handleMouseLeave = () => {
     setIsHovered(false);
@@ -224,23 +225,23 @@ function ProductDetails() {
                 <Phone size={24} />
                 <span>Call</span>
               </button>
-              <button className="bg-orange-400 hover:bg-white text-black font-bold py-4 px-10 rounded-xl ml-2 flex items-center">
-                <BookmarkSimple size={24} />
-                <span className="ml-2">Save</span>
-              </button>
-
-              {/* ----------------------- Handling Save---------------------- */}
               {saveState ? (
                 <button
-                  className="bg-orange-500 hover:bg-orange-700 text-black font-bold py-4 px-10 rounded-xl ml-2 flex items-center"
+                  className="bg-orange-400 hover:bg-orange-500 text-black font-bold py-4 px-10 rounded-xl ml-2 flex items-center"
                   onClick={handleSaveState}
                 >
                   <BookBookmark size={24} />
                   <span className="ml-2">Saved</span>
                 </button>
-              ) : null}
-
-              {/* -----------------------End----------------------------- */}
+              ) : (
+                <button
+                  className="bg-orange-400 text-black font-bold py-4 px-10 rounded-xl ml-2 flex items-center"
+                  onClick={handleSaveState}
+                >
+                  <BookmarkSimple size={24} />
+                  <span className="ml-2">Save</span>
+                </button>
+              )}
             </div>
             {phoneNumber && (
               <p className="text-lg font-bold mt-2">Phone No: {phoneNumber}</p>
