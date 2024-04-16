@@ -24,11 +24,13 @@ function ProductDetails() {
   const [saveState, setSaveState] = useState(false);
   const [saveId, setSaveId] = useState(0);
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [newUser, setNewUser] = useState(true);
+
   const BASE_URL = "https://aguero.pythonanywhere.com";
 
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
-  const { rater, reviewer, getReviews } = useProduct();
+  const { rater, reviewer, getReviews, getRatings } = useProduct();
 
   const token = localStorage.getItem("token");
   let config = null;
@@ -45,17 +47,13 @@ function ProductDetails() {
   }
 
   const getproducts = async () => {
-  try {
-    const response = await axios.get(
-      `${BASE_URL}/product/0/save`,
-      config
-    );
-    console.log("res", response.data);
-  } catch (err) {
-    console.error(err);
-  }
-};
-
+    try {
+      const response = await axios.get(`${BASE_URL}/product/0/save`, config);
+      console.log("res", response.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   useEffect(() => {
     getproducts();
@@ -82,18 +80,38 @@ function ProductDetails() {
       .then((data) => setReviews(data.json_array));
   }, [id]);
 
+
+  useEffect(() => {
+    async function fetchReviewsAndRatings() {
+      const reviewsResponse = await getReviews(id);
+      const ratingsResponse = await getRatings(id);
+
+      const combinedData = reviewsResponse.map((review) => {
+        const correspondingRating = ratingsResponse.find(
+          (rating) =>
+            rating.user.first_name === review.user.first_name &&
+            rating.user.last_name === review.user.last_name
+        );
+        return {
+          id: review.id,
+          userName: `${review.user.first_name} ${review.user.last_name}`,
+          rating: correspondingRating ? correspondingRating.rate : 0,
+          review: review.review,
+        };
+      });
+
+      setReviews(combinedData);
+      console.log("rvs", reviews);
+    }
+
+    fetchReviewsAndRatings();
+  }, [id, getReviews, getRatings, newUser]);
+  console.log("rvs out", reviews);
+
   const handleMouseEnter = (eventId) => {
     setIsHovered(true);
     setHoveredImage(eventId);
-  };
-  useEffect(function () {
-    async function revieww() {
-      e.preventDefault();
-      const revw = await getReviews(id);
-      console.log("reviewssss", revw);
-    }
-    revieww();
-  }, []);
+  }; 
 
   const handleMouseLeave = () => {
     setIsHovered(false);
@@ -143,15 +161,27 @@ function ProductDetails() {
   };
 
   //-----------------------End------------
-  function handleRatingReview(e) {
+  async function handleRatingReview(e) {
     e.preventDefault();
-    rater(id, rating);
-    reviewer(id, review);
-    console.log("Rating", rating);
-    console.log("review", review);
+
+    await rater(id, rating);
+    await reviewer(id, review);
+
+    setReviews((prevReviews) => [
+      ...prevReviews,
+      {
+        id: prevReviews.length + 1, // Generate a unique id for the new review
+        userName: `${user.first_name} ${user.last_name}`, // Assuming user info is available
+        rating: rating,
+        review: review,
+      },
+    ]);
+
+    setRating(0);
+    setReview("");
   }
 
-   const handleCallButtonClick = () => {
+  const handleCallButtonClick = () => {
     const generatedPhoneNumber = `+251${Math.random() < 0.5 ? "7" : "9"}${
       Math.floor(Math.random() * (99999999 - 10000000 + 1)) + 10000000
     }`;
@@ -164,11 +194,10 @@ function ProductDetails() {
         <div className="flex mr-40 ml-40 mt-20 mb-20 justify-items-center">
           <div className="">
             <img
-  src={`${BASE_URL}${product.image}`} // Correct template literal usage
-  alt={product.title}
-  className="w-full h-full object-cover rounded-lg"
-/>
-
+              src={`${BASE_URL}${product.image}`} // Correct template literal usage
+              alt={product.title}
+              className="w-full h-full object-cover rounded-lg"
+            />
           </div>
           <div className="w-full sm:w-1/2 pl-8 ml-0 sm:ml-20">
             <h3 className="text-xl font-ubuntu mb-0">{product.title}</h3>
@@ -199,7 +228,7 @@ function ProductDetails() {
                 <BookmarkSimple size={24} />
                 <span className="ml-2">Save</span>
               </button>
-      
+
               {/* ----------------------- Handling Save---------------------- */}
               {saveState ? (
                 <button
@@ -209,17 +238,15 @@ function ProductDetails() {
                   <BookBookmark size={24} />
                   <span className="ml-2">Saved</span>
                 </button>
-              ) : null }
+              ) : null}
 
               {/* -----------------------End----------------------------- */}
             </div>
             {phoneNumber && (
-                <p className="text-lg font-bold mt-2">Phone No: {phoneNumber}</p>
-              )}
-
+              <p className="text-lg font-bold mt-2">Phone No: {phoneNumber}</p>
+            )}
           </div>
         </div>
-        
 
         <form onSubmit={handleRatingReview}>
           {/* Rating Section */}
@@ -250,18 +277,19 @@ function ProductDetails() {
 
           {/* Reviews Section */}
           <div className="mt-20">
-            <h2 className="text-white text-3xl font-ubuntu font-bold mb-1">
+            <h2 className="text-gray-400 text-3xl font-ubuntu font-bold mb-1">
               Reviews
             </h2>
-            <div className="flex overflow-x-scroll scrollbar-hide">
-              {reviews.map((review, index) => (
+            <div className="flex overflow-x-scroll">
+              {reviews.map((data, index) => (
                 <ReviewsCard
                   key={index}
-                  userName={review.userName}
-                  rating={review.rating}
-                  review={review.review}
+                  userName={data.userName}
+                  rating={data.rating}
+                  review={data.review}
                 />
               ))}
+              {console.log("rating in review", rating)}
             </div>
           </div>
         </form>
