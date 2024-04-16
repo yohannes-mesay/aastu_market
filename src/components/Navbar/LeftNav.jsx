@@ -157,7 +157,7 @@ function LeftNav() {
             <>
               <li>
                 <Link to="/register" onClick={handleClose}>
-                  REGISTER
+                  SIGNUP
                 </Link>
               </li>
               <li>
