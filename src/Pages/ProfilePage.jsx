@@ -229,10 +229,10 @@ const ProfilePage = () => {
               <p className="residence">Residence: AASTU</p>
               <a href="/">
                 <div
-                  className="bg-orange-400 hover:bg-orange-500 text-black font-bold py-3 pl-28 rounded-xl mr-2 flex items-center"
+                  className= " bg-orange-400 hover:bg-orange-500 text-black font-bold py-3 pl-28 rounded-xl mr-2 flex items-center"
                   onClick={handleLogout}
                 >
-                  <span className="ml-1 ">Logout</span>
+                  <span className="ml-1 relative right-3/4 pr-2">Logout</span>
                 </div>
               </a>
             </div>
